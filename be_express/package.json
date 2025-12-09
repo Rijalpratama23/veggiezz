@@ -1,0 +1,32 @@
+{
+  "name": "be_express",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "build": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "rijalpratama",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "latest",
+    "eslint-config-airbnb-base": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-import": "latest",
+    "eslint-plugin-prettier": "latest",
+    "nodemon": "^3.1.11",
+    "prettier": "latest"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.15.3",
+    "sequelize": "^6.37.7"
+  }
+}
