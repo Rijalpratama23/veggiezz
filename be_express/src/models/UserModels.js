@@ -1,52 +1,47 @@
-import { Sequelize } from 'sequelize';
-import db from '../config/database.js';
+import { Sequelize } from "sequelize";
+import db from "../config/database.js";
 
 const { DataTypes } = Sequelize;
 
-const Users = db.define(
-  'users',
-  {
-    // Nama tabel di database
+const Users = db.define('users', {
+    // Definisi Kolom sesuai Database Anda
     id_user: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
-      autoIncrement: true,
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true
     },
     nama: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
     email: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
     password: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
     telepon: {
-      type: DataTypes.STRING,
+        type: DataTypes.STRING
     },
     alamat: {
-      type: DataTypes.TEXT,
+        type: DataTypes.TEXT
     },
     role: {
-      type: DataTypes.STRING,
-      defaultValue: 'pembeli', // Default peran jika tidak diisi
+        type: DataTypes.STRING,
+        defaultValue: 'pembeli' // Default role
     },
     refresh_token: {
-      type: DataTypes.TEXT,
+        type: DataTypes.TEXT // Penting: Kolom ini sudah Anda buat di DB
     },
-    // Karena di database Anda nama kolomnya 'tanggal_daftar', kita mapping manual:
     tanggal_daftar: {
-      type: DataTypes.DATE,
-      defaultValue: DataTypes.NOW,
-      field: 'tanggal_daftar',
-    },
-  },
-  {
-    freezeTableName: true, // Agar sequelize membaca tabel 'users', bukan 'userss'
-    timestamps: true, // Aktifkan timestamp
-    createdAt: 'tanggal_daftar', // Mapping createdAt ke kolom tanggal_daftar Anda
-    updatedAt: false, // Matikan updatedAt karena tidak ada kolomnya di tabel Anda
-  }
-);
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'tanggal_daftar' // Mapping agar Sequelize mengenali kolom ini
+    }
+}, {
+    freezeTableName: true, 
+    timestamps: true,      // Aktifkan timestamp
+    createdAt: 'tanggal_daftar', // Arahkan createdAt ke 'tanggal_daftar'
+    updatedAt: false       // Matikan updatedAt karena tidak ada di tabel Anda
+});
 
 export default Users;

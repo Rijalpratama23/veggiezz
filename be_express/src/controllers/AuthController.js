@@ -77,6 +77,16 @@ export const Login = async (req, res) => {
       }
     );
 
+    res.json({
+      accessToken,
+      user: {
+        id: userId,
+        nama: nama,
+        email: email,
+        role: role
+      }
+    });
+
     // Kirim token ke frontend
     res.json({ accessToken });
   } catch (error) {
@@ -90,3 +100,5 @@ export const Logout = async (req, res) => {
   // Untuk simplifikasi tugas, kita bisa return sukses saja dulu
   res.sendStatus(200);
 };
+
+
