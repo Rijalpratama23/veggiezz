@@ -6,6 +6,13 @@ const DaftarProduct = ({ onAddClick }) => {
   // 1. STATE UNTUK MENAMPUNG DATA DARI DATABASE
   const [products, setProducts] = useState([]);
 
+  const [showModal, setShowModal] = useState(false);
+  const [productIdToDelete, setProductIdToDelete] = useState(null);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
   // Ambil Data User (untuk tahu produk siapa yang harus ditampilkan, jika nanti pakai filter)
   const userLocal = JSON.parse(localStorage.getItem('user'));
 
@@ -25,18 +32,27 @@ const DaftarProduct = ({ onAddClick }) => {
     getProducts();
   }, []);
 
-  // 4. FUNGSI HAPUS PRODUK (DELETE)
-  const handleDelete = async (id) => {
-    // Konfirmasi dulu biar aman
-    if (!window.confirm('Yakin ingin menghapus produk ini?')) return;
+  const confirmDelete = (uuid) => {
+    setProductIdToDelete(uuid); // Simpan ID produk yang mau dihapus
+    setShowModal(true); // Tampilkan Modal
+  };
 
-    try {
-      await axios.delete(`http://127.0.0.1:5000/products/${id}`);
-      alert('Produk berhasil dihapus!');
-      getProducts(); // Refresh tabel setelah hapus
-    } catch (error) {
-      console.error(error);
-      alert('Gagal menghapus produk.');
+  // 2. Fungsi saat tombol "Batal" / "Tidak" diklik (Tutup Modal)
+  const closeModal = () => {
+    setShowModal(false);
+    setProductIdToDelete(null);
+  };
+
+  const handleDelete = async () => {
+    if (productIdToDelete) {
+      try {
+        await axios.delete(`http://localhost:5000/products/${productIdToDelete}`);
+        getProducts(); // Refresh data
+        closeModal(); // Tutup modal setelah berhasil
+      } catch (error) {
+        console.log(error);
+        alert('Gagal menghapus produk');
+      }
     }
   };
 
@@ -102,12 +118,15 @@ const DaftarProduct = ({ onAddClick }) => {
                   <td className="border p-3 md:p-4 text-center">
                     <div className="flex justify-center gap-2">
                       <button className="bg-white border border-gray-300 text-gray-700 px-3 py-1 md:px-4 rounded shadow-sm hover:bg-gray-100 font-semibold text-xs md:text-sm transition-all cursor-pointer">Edit</button>
+
+                      {/* --- PERBAIKAN DI SINI --- */}
                       <button
-                        onClick={() => handleDelete(product.id_produk)} // Panggil fungsi Hapus
+                        onClick={() => confirmDelete(product.uuid)} // SEKARANG MEMANGGIL MODAL, BUKAN LANGSUNG HAPUS
                         className="bg-red-500 text-white px-3 py-1 md:px-4 rounded shadow-sm hover:bg-red-600 font-semibold text-xs md:text-sm transition-all cursor-pointer"
                       >
                         Hapus
                       </button>
+                      {/* ------------------------- */}
                     </div>
                   </td>
                 </tr>
@@ -116,6 +135,47 @@ const DaftarProduct = ({ onAddClick }) => {
           </tbody>
         </table>
       </div>
+
+      {/* --- MODAL CONFIRMATION (CARD) --- */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm transition-opacity duration-300">
+          {/* Card Container */}
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md p-6 transform transition-all scale-100">
+            {/* Icon Sampah (Trash) */}
+            <div className="flex justify-center mb-4">
+              <div className="p-4 bg-red-100 rounded-full">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+            </div>
+
+            {/* Judul & Pesan */}
+            <div className="text-center">
+              <h3 className="text-xl font-bold text-gray-800 mb-2">Hapus Produk?</h3>
+              <p className="text-gray-500 mb-6">
+                Apakah Anda yakin ingin menghapus produk ini?
+                <br />
+                Tindakan ini tidak dapat dibatalkan.
+              </p>
+            </div>
+
+            {/* Tombol Aksi */}
+            <div className="flex gap-4 justify-center">
+              {/* Tombol Batal */}
+              <button onClick={closeModal} className="px-6 py-2.5 rounded-lg border border-gray-300 text-gray-700 font-medium hover:bg-gray-50 transition focus:ring-4 focus:ring-gray-100">
+                Tidak, Batal
+              </button>
+
+              {/* Tombol Hapus */}
+              <button onClick={handleDelete} className="px-6 py-2.5 rounded-lg bg-red-600 text-white font-medium hover:bg-red-700 shadow-lg shadow-red-500/30 transition focus:ring-4 focus:ring-red-200">
+                Ya, Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* ---------------------------------- */}
 
       <div className="mt-4 text-xs md:text-sm text-gray-500 text-right">
         Menampilkan <span className="font-bold text-gray-800">{products.length}</span> produk
