@@ -86,24 +86,24 @@ const DaftarProduct = ({ onAddClick }) => {
               </tr>
             ) : (
               // Mapping Data Asli
-              products.map((item, index) => (
-                <tr key={item.id_produk} className="hover:bg-gray-50 text-gray-700 text-sm md:text-lg transition-colors">
+              products.map((product, index) => (
+                <tr key={product.uuid} className="hover:bg-gray-50 text-gray-700 text-sm md:text-lg transition-colors">
                   <td className="border p-3 md:p-4 text-center font-semibold">{index + 1}</td>
-                  <td className="border p-3 md:p-4 font-medium whitespace-nowrap">{item.nama_produk}</td>
+                  <td className="border p-3 md:p-4 font-medium whitespace-nowrap">{product.name}</td>
                   <td className="border p-3 md:p-4 text-center">
                     <div className="flex justify-center">
                       {/* Jika ada gambar, tampilkan. Jika tidak, pakai placeholder */}
-                      <img src={item.gambar || 'https://placehold.co/100x100?text=No+Image'} alt={item.nama_produk} className="w-12 h-12 md:w-16 md:h-16 object-cover drop-shadow-md rounded" />
+                      <img src={product.url} alt={product.nama_produk} className="w-12 h-12 md:w-16 md:h-16 object-cover drop-shadow-md rounded" />
                     </div>
                   </td>
-                  <td className="border p-3 md:p-4 whitespace-nowrap font-bold text-green-700">{formatRupiah(item.harga)}</td>
-                  <td className="border p-3 md:p-4 whitespace-nowrap">{item.stok} unit</td>
-                  <td className="border p-3 md:p-4 whitespace-nowrap text-sm text-gray-600">{item.kategori}</td>
+                  <td className="border p-3 md:p-4 whitespace-nowrap font-bold text-green-700">{formatRupiah(product.price)}</td>
+                  <td className="border p-3 md:p-4 whitespace-nowrap">{product.stock} ikat</td>
+                  <td className="border p-3 md:p-4 whitespace-nowrap text-sm text-gray-600">{product.category}</td>
                   <td className="border p-3 md:p-4 text-center">
                     <div className="flex justify-center gap-2">
                       <button className="bg-white border border-gray-300 text-gray-700 px-3 py-1 md:px-4 rounded shadow-sm hover:bg-gray-100 font-semibold text-xs md:text-sm transition-all cursor-pointer">Edit</button>
                       <button
-                        onClick={() => handleDelete(item.id_produk)} // Panggil fungsi Hapus
+                        onClick={() => handleDelete(product.id_produk)} // Panggil fungsi Hapus
                         className="bg-red-500 text-white px-3 py-1 md:px-4 rounded shadow-sm hover:bg-red-600 font-semibold text-xs md:text-sm transition-all cursor-pointer"
                       >
                         Hapus

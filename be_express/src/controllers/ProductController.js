@@ -31,25 +31,31 @@ export const getProductById = async (req, res) => {
 // controllers/ProductController.js
 
 export const createProduct = async (req, res) => {
-    // 1. CEK DATA MASUK (Debug)
-    // Lihat terminal VS Code untuk memastikan data sampai
-    console.log("=== DATA MASUK ===");
-    console.log(req.body); 
-    console.log("==================");
+    console.log("=== DEBUGGING UPLOAD ===");
+    console.log("File:", req.file); // Cek apakah file gambar masuk?
+    console.log("Body:", req.body); // Cek apakah nama, harga, dll masuk?
+    console.log("==========================");
+    // 1. LOGIKA URL GAMBAR
+    let finalUrl = "";
 
-    // 2. MAPPING VARIABEL (LOGIKA ANTI-GAGAL)
-    // Backend akan mencoba membaca 'name' (Inggris). 
-    // Jika tidak ada, dia akan mencari 'nama_produk' (Indo).
-    // Ini menjamin data terbaca apapun format kirimannya.
-    
+    if(req.file === undefined) {
+        // Jika user tidak upload file, kita cek apakah dia kirim link teks?
+        // Kalau tidak ada juga, pakai gambar default/kosong
+        finalUrl = req.body.url || ""; 
+    } else {
+        // Jika ada file upload, buat URL otomatisnya
+        // Contoh: http://localhost:5000/images/file-123123.jpg
+        finalUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+    }
+
+    // 2. AMBIL DATA LAIN
     const name = req.body.name || req.body.nama_produk;
     const price = req.body.price || req.body.harga;
     const stock = req.body.stock || req.body.stok;
     const category = req.body.category || req.body.kategori;
-    const url = req.body.url || req.body.gambar; // atau req.body.link_gambar
     const description = req.body.description || req.body.deskripsi;
 
-    // Validasi Manual (Opsional, agar tidak error notNull)
+    // Validasi Sederhana
     if (!name || !price) {
         return res.status(400).json({msg: "Nama dan Harga tidak boleh kosong!"});
     }
@@ -60,7 +66,7 @@ export const createProduct = async (req, res) => {
             price: price,
             stock: stock,
             category: category,
-            url: url,
+            url: finalUrl, // Simpan URL yang sudah digenerate
             description: description
         });
         res.status(201).json({msg: "Product Created Successfully"});

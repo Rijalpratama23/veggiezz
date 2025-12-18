@@ -1,42 +1,55 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-// Pastikan Anda sudah mengonfigurasi base URL axios di file terpisah atau gunakan URL lengkap
-// misalnya: axios.defaults.baseURL = 'http://127.0.0.1:5000';
 
 const FormAddProduct = ({ onCancel, onSuccess }) => {
-  const userLocal = JSON.parse(localStorage.getItem('user'));
-
   const [nama, setNama] = useState('');
   const [harga, setHarga] = useState('');
   const [stok, setStok] = useState('');
   const [kategori, setKategori] = useState('Sayuran');
   const [deskripsi, setDeskripsi] = useState('');
-  const [gambar, setGambar] = useState('');
+  const [file, setFile] = useState(null);
+  const [preview, setPreview] = useState('');
   // Tambahkan state loading agar tombol tidak bisa diklik dua kali
   const [isLoading, setIsLoading] = useState(false);
 
+  const loadImage = (e) => {
+    const image = e.target.files[0];
+    setFile(image);
+    setPreview(URL.createObjectURL(image));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true); // Mulai loading
+    setIsLoading(true);
+
+    // BUNGKUS DATA MENGGUNAKAN FORMDATA (Wajib untuk upload file)
+    const formData = new FormData();
+    formData.append('name', nama);
+    formData.append('price', harga);
+    formData.append('stock', stok);
+    formData.append('category', kategori);
+    formData.append('description', deskripsi);
+
+    // 'file' harus sama dengan yang ada di router.js (upload.single('file'))
+    if (file) {
+      formData.append("file", file);
+    }
 
     try {
       // GANTI URL INI SESUAI KEBUTUHAN (Misal pakai 127.0.0.1 agar lebih stabil)
-      await axios.post('http://127.0.0.1:5000/products', {
-        name: nama, 
-        price: parseInt(harga), 
-        stock: parseInt(stok), 
-        category: kategori, 
-        url: gambar, 
-        description: deskripsi,
+      await axios.post('http://127.0.0.1:5000/products', formData, {
+        headers: {
+          'Content-type': 'multipart/form-data', // Header khusus upload
+        },
       });
 
       alert('Produk Berhasil Ditambahkan!');
       onSuccess();
     } catch (error) {
       console.error(error);
-      alert('Gagal menambah produk. Cek console.');
+      alert(error.response?.data?.msg || 'Gagal menambah produk');
     } finally {
-      setIsLoading(false); // Selesai loading
+      setIsLoading(false);
     }
   };
 
@@ -108,15 +121,21 @@ const FormAddProduct = ({ onCancel, onSuccess }) => {
 
         {/* Gambar (URL) */}
         <div>
-          <label className="block text-gray-700 font-semibold mb-1 text-sm md:text-base">Link Gambar (URL)</label>
-          <input
-            type="text"
-            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-green-500 outline-none transition duration-200"
-            placeholder="https://contoh.com/gambar-bayam.jpg"
-            value={gambar}
-            onChange={(e) => setGambar(e.target.value)}
-          />
-          <p className="text-xs text-gray-500 mt-1">*Copy link gambar dari Google dulu untuk tes</p>
+          <label className="block text-gray-700 font-semibold mb-1 text-sm md:text-base">Upload Gambar</label>
+          <div className="flex items-center gap-4">
+            <input
+              type="file"
+              className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 transition duration-200"
+              onChange={loadImage} // Panggil fungsi loadImage
+            />
+          </div>
+
+          {/* Tampilkan Preview jika ada gambar dipilih */}
+          {preview && (
+            <div className="mt-4">
+              <img src={preview} alt="Preview" className="w-32 h-32 object-cover rounded-lg border border-gray-300 shadow-sm" />
+            </div>
+          )}
         </div>
 
         {/* Deskripsi */}
