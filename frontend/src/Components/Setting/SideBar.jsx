@@ -11,9 +11,6 @@ const SideBar = ({ dataMenu }) => {
               key={index}
               onClick={item.onClick}
               // LOGIKA STYLE:
-              // 1. Base style (ukuran, flex, dll)
-              // 2. Cek apakah isDelete? (Tombol Hapus/Keluar punya style sendiri)
-              // 3. Jika bukan isDelete, Cek isActive? (Jika aktif hijau, jika tidak putih)
               className={`flex w-70 h-15 items-center gap-3 p-2 rounded-2xl justify-center mt-5 hover:cursor-pointer transition-all 
                 ${
                   item.isDelete
