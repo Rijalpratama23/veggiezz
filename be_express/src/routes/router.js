@@ -43,7 +43,7 @@ router.delete('/users/:id', deleteUser);
 router.get('/products', getProducts);       // Untuk melihat semua produk
 router.get('/products/:id', getProductById); // Untuk melihat 1 produk detail
 router.post('/products', upload.single('file'), createProduct);
-router.patch('/products/:id', updateProduct); // Untuk edit produk
+router.patch('/products/:id', upload.single('file'), updateProduct); // Untuk edit produk
 router.delete('/products/:id', deleteProduct); // Untuk hapus produk
 
 export default router;

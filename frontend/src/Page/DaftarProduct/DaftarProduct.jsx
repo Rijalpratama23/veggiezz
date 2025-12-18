@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 // Pastikan library icon fontawesome sudah terinstall di index.html atau via npm
@@ -117,7 +118,12 @@ const DaftarProduct = ({ onAddClick }) => {
                   <td className="border p-3 md:p-4 whitespace-nowrap text-sm text-gray-600">{product.category}</td>
                   <td className="border p-3 md:p-4 text-center">
                     <div className="flex justify-center gap-2">
-                      <button className="bg-white border border-gray-300 text-gray-700 px-3 py-1 md:px-4 rounded shadow-sm hover:bg-gray-100 font-semibold text-xs md:text-sm transition-all cursor-pointer">Edit</button>
+                      <Link
+                        to={`/products/edit/${product.uuid}`} // Mengarah ke URL edit dengan membawa ID
+                        className="bg-white border border-gray-300 text-gray-700 px-3 py-1 md:px-4 rounded shadow-sm hover:bg-gray-100 font-semibold text-xs md:text-sm transition-all cursor-pointer flex items-center justify-center"
+                      >
+                        Edit
+                      </Link>
 
                       {/* --- PERBAIKAN DI SINI --- */}
                       <button

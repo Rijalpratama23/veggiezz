@@ -12,6 +12,7 @@ import SettingPembeli from './Page/Setting/SettingPembeli';
 import SettingPenjual from './Page/Setting/SettingPenjual';
 import CompliteOrder from './Page/CompliteOrder/CompliteOrder';
 import ConfirmFaid from './Page/ConfirmPaid/ConfirmFaid';
+import FormEditProduct from './Page/DaftarProduct/FormEditProduct';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
       <Route path="/keranjang" element={<Keranjang />} />
       <Route path="/compliteOrder" element={<CompliteOrder />} />
       <Route path="/confirmFaid" element={<ConfirmFaid />} />
+      <Route path="/products/edit/:id" element={<FormEditProduct />} />
       <Route path="/promo" element={<Promo />} />
       <Route path="/product" element={<Product />} />
       <Route path="/contact" element={<Contact />} />
