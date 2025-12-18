@@ -52,9 +52,6 @@ const Content = () => {
         localStorage.setItem('token', response.data.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.user));
 
-        // Simpan token (opsional, biar user tetap login kalau direfresh)
-        // localStorage.setItem('token', response.data.accessToken);
-
         // Pindah ke Home
         navigate('/home');
       }
@@ -134,6 +131,36 @@ const Content = () => {
 
           {/* Tombol Utama */}
           <Button type="submit" title={isRegister ? 'Daftar Sekarang' : 'Login'} />
+
+          {/* --------------------------------------------------------- */}
+          {/* FITUR BARU: SEPARATOR DAN SOCIAL LOGIN              */}
+          {/* --------------------------------------------------------- */}
+
+          <div className="flex items-center my-4">
+            <div className="flex-grow border-t border-gray-300"></div>
+            <span className="mx-4 text-gray-500 text-sm">Atau Masuk Dengan</span>
+            <div className="flex-grow border-t border-gray-300"></div>
+          </div>
+
+          <div className="flex justify-center gap-6">
+            {/* Google Icon */}
+            <button
+              type="button"
+              className="p-2 rounded-full transition-transform hover:scale-110 active:scale-95"
+              onClick={() => alert('Fitur Login Google belum tersedia')} // Placeholder action
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-8 h-8" />
+            </button>
+
+            {/* Facebook Icon */}
+            <button
+              type="button"
+              className="p-2 rounded-full transition-transform hover:scale-110 active:scale-95"
+              onClick={() => alert('Fitur Login Facebook belum tersedia')} // Placeholder action
+            >
+              <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" className="w-8 h-8" />
+            </button>
+          </div>
 
           {/* Toggle Login/Register */}
           <div className="text-center mt-4 text-sm text-gray-600">
