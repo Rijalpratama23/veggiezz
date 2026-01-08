@@ -10,7 +10,7 @@ const FormContact = () => {
       <div className="nama border rounded-2xl mb-4 sm:mb-5 w-full">
         <input type="text" placeholder="Nama" className="outline-none m-3 w-full text-base sm:text-lg" />
       </div>
-      <div className="addrees border rounded-2xl mb-4 sm:mb-5">
+      <div className="addrees border rounded-2xl mb-4 sm:mb-5"> 
         <input type="text" placeholder="Alamat Email" className="outline-none m-3 w-full text-base sm:text-lg" />
       </div>
       <div className="subjek border rounded-2xl mb-4 sm:mb-5">
