@@ -5,9 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "build": "echo 'No build step for backend'",
-    "dev": "nodemon src/index.js"
+    "build": "echo 'No build step for backend'"
   },
   "author": "rijalpratama",
   "license": "MIT",
