@@ -23,7 +23,7 @@ const FormEditProduct = () => {
 
   const getProductById = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:5000/products/${id}`);
+      const response = await axios.get(`http://127.0.0.1:3000/products/${id}`);
       const data = response.data;
 
       // Isi form dengan data lama

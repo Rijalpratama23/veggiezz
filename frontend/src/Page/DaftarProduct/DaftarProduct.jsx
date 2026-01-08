@@ -20,8 +20,9 @@ const DaftarProduct = ({ onAddClick }) => {
   // 2. FUNGSI AMBIL DATA (GET)
   const getProducts = async () => {
     try {
-      // Tembak API Backend
-      const response = await axios.get('http://127.0.0.1:5000/products');
+      // Arahkan ke API Vercel (bukan localhost 5000 lagi)
+      const response = await axios.get('/api/produk');
+
       setProducts(response.data); // Simpan hasil ke State
     } catch (error) {
       console.error('Gagal mengambil data produk:', error);
