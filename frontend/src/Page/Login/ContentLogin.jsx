@@ -79,7 +79,7 @@ const Content = () => {
         <h2 className="text-2xl font-bold mb-2 text-gray-900 font-primary">{isRegister ? 'Daftar Akun Baru' : 'Login ke Akun VeggieZ'}</h2>
 
         {/* Pesan Error / Sukses */}
-        {msg && <p className="text-center text-red-500 bg-red-100 p-2 rounded mb-4 text-sm">{msg}</p>}
+        {msg && <p className="text-center text-black bg-green-300 p-2 rounded mb-4 text-sm">{msg}</p>}
 
         <form onSubmit={handleAuth} className="space-y-4">
           {/* Input NAMA (Hanya muncul saat Register) */}
