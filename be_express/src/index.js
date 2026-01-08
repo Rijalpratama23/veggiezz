@@ -32,3 +32,5 @@ app.use(cors({ credentials: true, origin: 'http://localhost:5173' }));
 app.use(router);
 
 app.listen(5000, () => console.log('Server running at port 5000'));
+
+module.exports = app;
