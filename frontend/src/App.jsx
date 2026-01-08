@@ -6,7 +6,7 @@ import Profile from './Page/profile/Profile';
 import Keranjang from './Page/keranjang/Keranjang';
 import Promo from './Page/promo/Promo';
 import Product from './Page/product/Product';
-import Contact from './Page/Contact/Contact';
+import Contact from './Page/Kontak/Contact';
 import About from './Page/about/About';
 import SettingPembeli from './Page/Setting/SettingPembeli';
 import SettingPenjual from './Page/Setting/SettingPenjual';
