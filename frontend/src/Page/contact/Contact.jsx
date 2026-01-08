@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Header';
-import FormContact from '../../Components/Contact/FormContact';
+import FormKontak from '../../Components/Contact/FormKontak';
 import Img from '../../Components/Contact/Img';
 
 const Contact = () => {
@@ -11,7 +11,7 @@ const Contact = () => {
         <div className="container flex flex-col lg:flex-row justify-between content-center rounded-2xl poster w-full max-w-6xl">
           <div className="md:w-full flex flex-col lg:flex-row justify-between bg-white p-6 sm:p-8 md:p-10 rounded-2xl m-3 sm:m-5 shadow-xl/30">
             
-            <FormContact />
+            <FormKontak />
             <Img />
             
           </div>
