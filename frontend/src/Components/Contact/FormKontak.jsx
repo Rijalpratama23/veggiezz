@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'
 import BtnContact from './btnContact';
 
-const FormContact = () => {
+const FormKontact = () => {
   return (
     <form action="" className="my-5 w-full lg:w-1/2">
       <h1 className="font-acme text-3xl sm:text-4xl md:text-5xl mb-5 sm:mb-7 text-center lg:text-left">Kontak Kami</h1>
@@ -27,4 +27,4 @@ const FormContact = () => {
   );
 };
 
-export default FormContact;
+export default FormKontact;
