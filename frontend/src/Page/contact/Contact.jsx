@@ -1,6 +1,6 @@
 import React from 'react';
 import Header from '../../Components/Header';
-import FormContact from '../../Components/Contact/formContact';
+import FormContact from '../../Components/Contact/FormContact';
 import Img from '../../Components/Contact/Img';
 
 const Contact = () => {
